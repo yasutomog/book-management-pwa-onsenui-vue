@@ -29,7 +29,6 @@
         let filtered = this.$store.state.navigator.books.filter((book) => {
           return (book.borrower !== null)
         })
-        console.log('books', filtered);
         return filtered;
       }
     }

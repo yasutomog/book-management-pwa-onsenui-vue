@@ -23,8 +23,8 @@
       </v-ons-list-item>
     </v-ons-list>
     <section>
-      <v-ons-button modifier="large"  v-show="!book.isLending" @click="borrow(book.id, book.returnDate)" v-bind:disabled="isInvalid">借りる</v-ons-button>
-      <v-ons-button modifier="large"  v-show="book.isLending" @click="restore(book.id)">返却</v-ons-button>
+      <v-ons-button modifier="large"  v-show="!book.isLending" @click="borrow" v-bind:disabled="isInvalid">借りる</v-ons-button>
+      <v-ons-button modifier="large"  v-show="book.isLending" @click="restore">返却</v-ons-button>
     </section>
   </v-ons-page>
 </template>
@@ -41,18 +41,20 @@
       }
     },
     methods: {
-      borrow(id, returnDate) {
+      borrow() {
+        let selectedBook = this.$store.state.navigator.selectedBook
         this.$store.dispatch('navigator/borrow', {
-          id: id,
-          returnDate: returnDate
+          id: selectedBook.id,
+          returnDate: selectedBook.returnDate
         })
       },
-      restore(id) {
-        this.$store.dispatch('navigator/restore', id)
+      restore() {
+        let selectedBook = this.$store.state.navigator.selectedBook
+        this.$store.dispatch('navigator/restore', selectedBook.id)
       },
       changeDate() {
         let vm = this
-        let returnDate = this.returnDate
+        let returnDate = this.$store.state.navigator.selectedBook.returnDate
         if (returnDate === null || returnDate === '') {
           vm.isInvalid = true
         } else {
