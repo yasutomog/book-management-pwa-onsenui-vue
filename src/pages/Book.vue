@@ -35,6 +35,9 @@
         isInvalid: true
       };
     },
+    mounted() {
+      this.changeDate()
+    },
     computed: {
       book() {
         return this.$store.state.navigator.selectedBook;
@@ -60,7 +63,6 @@
         } else {
           vm.isInvalid = false
         }
-
       }
     }
   };
